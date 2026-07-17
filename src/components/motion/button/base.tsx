@@ -14,9 +14,16 @@ import {
   useRef,
   useState,
 } from "react";
+import { Slot } from "radix-ui";
 import { EASE_OUT, SPRING_PRESS } from "@/lib/ease";
 import { cn } from "@/lib/utils";
 import { useHoverCapable } from "@/lib/hooks/use-hover-capable";
+
+// A Slot that motion can animate. When `asChild` is set, the button renders as
+// this instead of a <button>, merging its styles + press animation onto the
+// single child element (e.g. a Next <Link>), so navigation stays a real <a href>
+// — keeping prefetch, open-in-new-tab, and link semantics — while still animating.
+const MotionSlot = motion.create(Slot.Root);
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "outline";
 export type ButtonSize = "sm" | "md" | "lg" | "icon";
@@ -30,6 +37,13 @@ export interface ButtonProps extends Omit<
   pressScale?: number;
   /** Spawn a Material-style ripple from the press point. Off by default. */
   ripple?: boolean;
+  /**
+   * Render as the single child element (e.g. a Next `<Link>`) instead of a
+   * `<button>`, merging styles + press animation onto it. Use for navigation
+   * so the result is a real `<a href>`. Note: `ripple` is ignored with `asChild`
+   * (Slot allows only one child, leaving no room for the ripple layer).
+   */
+  asChild?: boolean;
   children?: ReactNode;
 }
 
@@ -57,6 +71,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       pressScale = 0.93,
       ripple = false,
+      asChild = false,
       className,
       children,
       onPointerDown,
@@ -90,10 +105,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       [ripple, reduce, onPointerDown],
     );
 
+    // Ripple can't compose with asChild: Slot permits only a single child, so
+    // there's no room for the ripple overlay layer alongside the real content.
+    const showRipple = ripple && !asChild;
+    const Comp = asChild ? MotionSlot : motion.button;
+
     return (
-      <motion.button
+      <Comp
         ref={ref}
-        type="button"
+        // `type` is only valid on <button>; with asChild the child owns its tag.
+        type={asChild ? undefined : "button"}
         whileTap={reduce ? undefined : { scale: pressScale }}
         whileHover={reduce || !canHover ? undefined : { scale: 1.02 }}
         transition={SPRING_PRESS}
@@ -102,42 +123,51 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "inline-flex items-center justify-center font-medium select-none",
           "transition-colors",
           "disabled:pointer-events-none disabled:opacity-50",
-          ripple && "relative overflow-hidden",
+          showRipple && "relative overflow-hidden",
           VARIANT_CLASS[variant],
           SIZE_CLASS[size],
           className,
         )}
         {...rest}
       >
-        {ripple && !reduce ? (
-          <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
-            <AnimatePresence>
-              {ripples.map((r) => (
-                <motion.span
-                  key={r.id}
-                  className="absolute rounded-full bg-current"
-                  style={{
-                    left: r.x,
-                    top: r.y,
-                    width: r.size,
-                    height: r.size,
-                    x: "-50%",
-                    y: "-50%",
-                  }}
-                  initial={{ scale: 0.05, opacity: 0.3 }}
-                  animate={{ scale: 1, opacity: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1.6, ease: EASE_OUT }}
-                  onAnimationComplete={() =>
-                    setRipples((prev) => prev.filter((x) => x.id !== r.id))
-                  }
-                />
-              ))}
-            </AnimatePresence>
-          </span>
-        ) : null}
-        {children}
-      </motion.button>
+        {/* asChild must forward exactly ONE child to Slot, so the ripple layer
+            (only ever shown when !asChild anyway) is omitted in that branch —
+            passing a null sibling would make Slot see two children and throw. */}
+        {asChild ? (
+          children
+        ) : (
+          <>
+            {showRipple && !reduce ? (
+              <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
+                <AnimatePresence>
+                  {ripples.map((r) => (
+                    <motion.span
+                      key={r.id}
+                      className="absolute rounded-full bg-current"
+                      style={{
+                        left: r.x,
+                        top: r.y,
+                        width: r.size,
+                        height: r.size,
+                        x: "-50%",
+                        y: "-50%",
+                      }}
+                      initial={{ scale: 0.05, opacity: 0.3 }}
+                      animate={{ scale: 1, opacity: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.6, ease: EASE_OUT }}
+                      onAnimationComplete={() =>
+                        setRipples((prev) => prev.filter((x) => x.id !== r.id))
+                      }
+                    />
+                  ))}
+                </AnimatePresence>
+              </span>
+            ) : null}
+            {children}
+          </>
+        )}
+      </Comp>
     );
   },
 );

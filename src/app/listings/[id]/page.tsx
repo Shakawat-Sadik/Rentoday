@@ -50,7 +50,7 @@ const DATE_OPTIONS = buildDateOptions()
 
 function PageSkeleton() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto px-4 py-10 sm:px-6 lg:px-8">
       <Skeleton className="mb-6 h-5 w-24" />
       <Skeleton className="mb-8 h-80 w-full rounded-xl" />
       <div className="grid gap-8 lg:grid-cols-3">
@@ -315,7 +315,7 @@ export default function ListingDetailPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 py-8 sm:px-6 lg:px-8">
 
         {/* ── Breadcrumb ──────────────────────────────────────────────────── */}
         <nav className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">

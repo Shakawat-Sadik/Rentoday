@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/accordion'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/motion/button/base'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { IListing } from '@/lib/interfaces-types'
@@ -270,7 +270,7 @@ export default function LandingPage() {
 
       {/* ── 2. FEATURED LISTINGS ───────────────────────────────────────────── */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto">
           <div className="mb-8 flex items-end justify-between">
             <div>
               <h2 className="font-heading text-3xl font-bold text-foreground">Featured Listings</h2>
@@ -323,7 +323,7 @@ export default function LandingPage() {
 
       {/* ── 3. HOW IT WORKS ───────────────────────────────────────────────── */}
       <section className="bg-muted/40 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto">
           <div className="mb-12 text-center">
             <h2 className="font-heading text-3xl font-bold text-foreground">How It Works</h2>
             <p className="mt-2 text-muted-foreground">Three simple steps to your new home</p>
@@ -374,7 +374,7 @@ export default function LandingPage() {
 
       {/* ── 4. POPULAR AREAS ──────────────────────────────────────────────── */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto">
           <div className="mb-8 text-center">
             <h2 className="font-heading text-3xl font-bold text-foreground">Popular Areas</h2>
             <p className="mt-2 text-muted-foreground">
@@ -403,7 +403,7 @@ export default function LandingPage() {
 
       {/* ── 5. STATS ──────────────────────────────────────────────────────── */}
       <section className="bg-primary py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {STATS.map(stat => (
               <div key={stat.label} className="text-center text-primary-foreground">
@@ -422,7 +422,7 @@ export default function LandingPage() {
 
       {/* ── 6. TESTIMONIALS ───────────────────────────────────────────────── */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto">
           <div className="mb-12 text-center">
             <h2 className="font-heading text-3xl font-bold text-foreground">What People Say</h2>
             <p className="mt-2 text-muted-foreground">Real experiences from tenants and property owners</p>
@@ -493,7 +493,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-4xl">
           <div className="relative overflow-hidden rounded-3xl bg-primary px-8 py-14 text-center text-primary-foreground">
             <div className="absolute inset-0 opacity-20 pointer-events-none">
-              <ShaderBackground variant="waves" className="h-full w-full" />
+              <ShaderBackground variant="perlin-noise" className="h-full w-full" />
             </div>
             <div className="relative z-10">
               <TrendingUp className="mx-auto h-10 w-10 mb-4 opacity-80" />
@@ -511,7 +511,7 @@ export default function LandingPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 min-w-[160px]"
+                  className="border-primary-foreground/30 text-primary-foreground bg-primary hover:bg-primary-foreground/10 hover:text-chart-1 transition-all duration-500 min-w-[160px]"
                   asChild
                 >
                   <Link href="/listings">Browse Listings</Link>

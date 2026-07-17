@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MapPin, BedDouble, Star } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
@@ -62,7 +63,6 @@ function ListingCardSkeleton() {
 // ── Listing card ──────────────────────────────────────────────────────────────
 
 function ListingCard({ listing }: { listing: IListing }) {
-  const router = useRouter()
   const image = listing.images?.[0] || `https://picsum.photos/seed/${listing._id}/800/600`
 
   return (
@@ -106,12 +106,8 @@ function ListingCard({ listing }: { listing: IListing }) {
         <span className="font-semibold text-primary">
           ৳{Number(listing.rentPerMonth).toLocaleString()}<span className="text-xs font-normal text-muted-foreground">/mo</span>
         </span>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => router.push(`/listings/${String(listing._id)}`)}
-        >
-          View Details
+        <Button variant="secondary" size="sm" asChild>
+          <Link href={`/listings/${String(listing._id)}`}>View Details</Link>
         </Button>
       </CardFooter>
     </Card>
@@ -279,7 +275,7 @@ function ListingsContent() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 py-10 sm:px-6 lg:px-8">
 
         {/* ── Page Header ─────────────────────────────────────────────────── */}
         <div className="mb-8">
@@ -438,7 +434,7 @@ export default function ListingsPage() {
     <Suspense
       fallback={
         <main className="min-h-screen bg-background">
-          <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="mx-auto px-4 py-10 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {Array.from({ length: 8 }).map((_, i) => (
                 <ListingCardSkeleton key={i} />

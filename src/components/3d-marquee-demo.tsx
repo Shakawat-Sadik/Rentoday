@@ -36,7 +36,7 @@ export default function ThreeDMarqueeDemo() {
     "https://assets.aceternity.com/world-map.webp",
   ];
   return (
-    <div className="mx-auto my-10 max-w-7xl rounded-3xl bg-muted/50 p-2 ring-1 ring-border/10">
+    <div className="mx-auto my-10 rounded-3xl bg-muted/50 p-2 ring-1 ring-border/10">
       <ThreeDMarquee images={images} />
     </div>
   );

@@ -264,7 +264,7 @@ export default function ManageContent() {
 
   if (loading) {
     return (
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-8">
+      <main className="mx-auto px-4 py-10 sm:px-6 lg:px-8 space-y-8">
         <Skeleton className="h-8 w-56" />
         <Skeleton className="h-80 w-full rounded-xl" />
         <Skeleton className="h-8 w-56" />
@@ -275,7 +275,7 @@ export default function ManageContent() {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-12">
+      <div className="mx-auto px-4 py-10 sm:px-6 lg:px-8 space-y-12">
 
         {/* ── Listings section ──────────────────────────────────────────────── */}
         <section>
