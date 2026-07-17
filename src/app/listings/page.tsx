@@ -1,12 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, BedDouble, Star } from 'lucide-react'
 
-import { FaviconSearch } from '@/components/unlumen-ui/favicon-search'
+import { Input } from '@/components/ui/input'
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from '@/components/motion/select'
@@ -63,6 +62,7 @@ function ListingCardSkeleton() {
 // ── Listing card ──────────────────────────────────────────────────────────────
 
 function ListingCard({ listing }: { listing: IListing }) {
+  const router = useRouter()
   const image = listing.images?.[0] || `https://picsum.photos/seed/${listing._id}/800/600`
 
   return (
@@ -78,8 +78,8 @@ function ListingCard({ listing }: { listing: IListing }) {
         />
         {/* Rating badge overlay */}
         <div className="absolute right-2 top-2">
-          <Badge className="flex items-center gap-0.5 bg-black/70 text-white backdrop-blur-sm">
-            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+          <Badge className="flex items-center gap-0.5 bg-foreground/70 text-background backdrop-blur-sm">
+            <Star className="h-3 w-3 fill-primary text-primary" />
             {Number(listing.rating).toFixed(1)}
           </Badge>
         </div>
@@ -103,15 +103,15 @@ function ListingCard({ listing }: { listing: IListing }) {
 
       {/* Footer */}
       <CardFooter className="flex items-center justify-between gap-2">
-        <span className="font-semibold text-blue-700 dark:text-blue-400">
+        <span className="font-semibold text-primary">
           ৳{Number(listing.rentPerMonth).toLocaleString()}<span className="text-xs font-normal text-muted-foreground">/mo</span>
         </span>
         <Button
-          asChild
           variant="secondary"
           size="sm"
+          onClick={() => router.push(`/listings/${String(listing._id)}`)}
         >
-          <Link href={`/listings/${listing._id}`}>View Details</Link>
+          View Details
         </Button>
       </CardFooter>
     </Card>
@@ -134,7 +134,11 @@ function buildPageRange(current: number, total: number): (number | 'ellipsis')[]
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-export default function ListingsPage() {
+// Everything that reads the URL query string lives here. It's a separate
+// component so the default export below can wrap it in <Suspense> — Next.js
+// requires useSearchParams() to sit inside a Suspense boundary, otherwise the
+// page can't be prerendered at build time (it "bails out" to client rendering).
+function ListingsContent() {
   const router       = useRouter()
   const searchParams = useSearchParams()
 
@@ -150,14 +154,32 @@ export default function ListingsPage() {
   const [searchInput,   setSearchInput]   = useState(urlQuery)
   const [sliderValues,  setSliderValues]  = useState<[number, number]>([urlMinRent, urlMaxRent])
 
+  // Re-sync local UI state when the URL changes from outside these controls
+  // (e.g. "Clear filters", browser back/forward) — done during render, per
+  // React's guidance, rather than in an effect, to avoid an extra render pass.
+  const [syncedQuery, setSyncedQuery] = useState(urlQuery)
+  if (urlQuery !== syncedQuery) {
+    setSyncedQuery(urlQuery)
+    setSearchInput(urlQuery)
+  }
+  const [syncedRentRange, setSyncedRentRange] = useState<[number, number]>([urlMinRent, urlMaxRent])
+  if (urlMinRent !== syncedRentRange[0] || urlMaxRent !== syncedRentRange[1]) {
+    setSyncedRentRange([urlMinRent, urlMaxRent])
+    setSliderValues([urlMinRent, urlMaxRent])
+  }
+
   // Fetched data
   const [listings,   setListings]   = useState<IListing[]>([])
   const [totalPages, setTotalPages] = useState(1)
   const [total,      setTotal]      = useState(0)
   const [loading,    setLoading]    = useState(true)
 
-  // Build API query string from URL params
-  const buildApiUrl = useCallback((overrides: Record<string, string | number> = {}) => {
+  // Build API query string from URL params.
+  // Not wrapped in useCallback: the effect below keys off the *string* this
+  // returns (currentRequestUrl), not the function reference, so memoizing
+  // the function buys nothing — string equality already prevents refetching
+  // on renders where the URL hasn't actually changed.
+  function buildApiUrl(overrides: Record<string, string | number> = {}) {
     const p = new URLSearchParams()
     const q        = String(overrides.query    ?? urlQuery)
     const loc      = String(overrides.location ?? urlLocation)
@@ -173,7 +195,22 @@ export default function ListingsPage() {
     p.set('sort', sort)
     p.set('page', page)
     return `/api/listings?${p.toString()}`
-  }, [urlQuery, urlLocation, urlMinRent, urlMaxRent, urlSort, urlPage])
+  }
+
+  // The exact request URL for this render — also doubles as the effect's
+  // dependency key below, so a filter change is detected by URL string
+  // equality rather than by re-creating a memoized function each time.
+  const currentRequestUrl = buildApiUrl()
+
+  // Flip the loading flag the moment the target URL changes, during render
+  // (React's recommended way to react to a derived value changing) rather
+  // than inside the effect, where a synchronous setState causes an extra
+  // render pass. The effect below only needs to flip it back off.
+  const [trackedRequestUrl, setTrackedRequestUrl] = useState(currentRequestUrl)
+  if (currentRequestUrl !== trackedRequestUrl) {
+    setTrackedRequestUrl(currentRequestUrl)
+    setLoading(true)
+  }
 
   // Push filter changes to the URL (which triggers a re-fetch via useEffect)
   function pushParams(overrides: Record<string, string | number> = {}) {
@@ -194,32 +231,30 @@ export default function ListingsPage() {
     router.push(`/listings?${p.toString()}`)
   }
 
-  // Fetch listings whenever URL params change
+  // Fetch listings whenever the request URL changes (loading was already
+  // flipped true during render, above).
+  // `cancelled` guards against out-of-order responses: if the user changes
+  // filters again before this request resolves, its (now-stale) response
+  // must not overwrite the results of the newer request.
   useEffect(() => {
-    setLoading(true)
-    fetch(buildApiUrl())
+    let cancelled = false
+    fetch(currentRequestUrl)
       .then((r) => r.json())
       .then((data: ListingsResponse) => {
+        if (cancelled) return
         setListings(data.listings  || [])
         setTotalPages(data.totalPages || 1)
         setTotal(data.total || 0)
       })
-      .catch(console.error)
-      .finally(() => setLoading(false))
-  }, [buildApiUrl])
-
-  // Sync search input if URL param changes externally (e.g. back button)
-  useEffect(() => { setSearchInput(urlQuery) },   [urlQuery])
-  useEffect(() => { setSliderValues([urlMinRent, urlMaxRent]) }, [urlMinRent, urlMaxRent])
+      .catch((err) => { if (!cancelled) console.error(err) })
+      .finally(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [currentRequestUrl])
 
   // ── Handlers ──────────────────────────────────────────────────────────────
 
-  function handleSearch(_value: string, _domain: null) {
+  function handleSearchSubmit() {
     pushParams({ query: searchInput, page: 1 })
-  }
-
-  function handleSearchChange(value: string) {
-    setSearchInput(value)
   }
 
   function handleLocationChange(value: string) {
@@ -260,12 +295,11 @@ export default function ListingsPage() {
           {/* Search */}
           <div className="flex-1">
             <label className="mb-1.5 block text-xs font-medium text-muted-foreground">Search</label>
-            <FaviconSearch
+            <Input
               value={searchInput}
-              onChange={handleSearchChange}
-              onSearch={handleSearch}
+              onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSearchSubmit() }}
               placeholder="Search by title or area…"
-              className="max-w-none"
             />
           </div>
 
@@ -393,5 +427,28 @@ export default function ListingsPage() {
 
       </div>
     </main>
+  )
+}
+
+// Default export: wraps the URL-reading content in a Suspense boundary so the
+// page prerenders cleanly. The fallback shows the same skeleton grid the page
+// uses while fetching, so there's no visual jump.
+export default function ListingsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-background">
+          <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <ListingCardSkeleton key={i} />
+              ))}
+            </div>
+          </div>
+        </main>
+      }
+    >
+      <ListingsContent />
+    </Suspense>
   )
 }

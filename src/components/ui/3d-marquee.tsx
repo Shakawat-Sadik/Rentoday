@@ -56,7 +56,7 @@ export const ThreeDMarquee = ({
                       key={imageIndex + image}
                       src={image}
                       alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[970/700] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl"
+                      className="aspect-[970/700] rounded-lg object-cover ring ring-border/10 hover:shadow-2xl"
                       width={970}
                       height={700}
                     />
@@ -82,13 +82,13 @@ const GridLineHorizontal = ({
     <div
       style={
         {
-          "--background": "#ffffff",
-          "--color": "rgba(0, 0, 0, 0.2)",
+          "--background": "var(--background)",
+          "--color": "color-mix(in oklch, var(--foreground) 20%, transparent)",
           "--height": "1px",
           "--width": "5px",
           "--fade-stop": "90%",
           "--offset": offset || "200px", //-100px if you want to keep the line inside
-          "--color-dark": "rgba(255, 255, 255, 0.2)",
+          "--color-dark": "color-mix(in oklch, var(--foreground) 20%, transparent)",
           maskComposite: "exclude",
         } as React.CSSProperties
       }
@@ -117,13 +117,13 @@ const GridLineVertical = ({
     <div
       style={
         {
-          "--background": "#ffffff",
-          "--color": "rgba(0, 0, 0, 0.2)",
+          "--background": "var(--background)",
+          "--color": "color-mix(in oklch, var(--foreground) 20%, transparent)",
           "--height": "5px",
           "--width": "1px",
           "--fade-stop": "90%",
           "--offset": offset || "150px", //-100px if you want to keep the line inside
-          "--color-dark": "rgba(255, 255, 255, 0.2)",
+          "--color-dark": "color-mix(in oklch, var(--foreground) 20%, transparent)",
           maskComposite: "exclude",
         } as React.CSSProperties
       }

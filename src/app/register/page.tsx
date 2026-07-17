@@ -70,14 +70,14 @@ export default function RegisterPage() {
     <div className="flex min-h-screen">
 
       {/* ── Left: Registration Form ───────────────────────────────────────── */}
-      <div className="flex w-full items-center justify-center bg-white p-6 dark:bg-black lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-background p-6 lg:w-1/2">
         <div className="w-full max-w-md">
 
           {/* Header */}
-          <h2 className="text-2xl font-bold text-neutral-800 dark:text-neutral-200">
+          <h2 className="text-2xl font-bold text-foreground">
             Create your account
           </h2>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="mt-2 text-sm text-muted-foreground">
             Join RenToday and find your perfect home in Dhaka
           </p>
 
@@ -121,7 +121,7 @@ export default function RegisterPage() {
                 required
                 autoComplete="tel"
               />
-              <p className="text-xs text-neutral-500">Bangladeshi format: 01XXXXXXXXX or +880XXXXXXXXX</p>
+              <p className="text-xs text-muted-foreground">Bangladeshi format: 01XXXXXXXXX or +880XXXXXXXXX</p>
             </LabelInputContainer>
 
             {/* Gender — radio buttons */}
@@ -134,8 +134,8 @@ export default function RegisterPage() {
                     className={cn(
                       'flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors',
                       gender === option
-                        ? 'border-blue-600 bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:text-blue-300'
-                        : 'border-neutral-300 text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-400',
+                        ? 'border-primary bg-primary/10 text-primary'
+                        : 'border-border text-muted-foreground hover:border-foreground/40',
                     )}
                   >
                     <input
@@ -180,7 +180,7 @@ export default function RegisterPage() {
             </LabelInputContainer>
 
             {error && (
-              <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600 dark:bg-red-950/30 dark:text-red-400">
+              <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive dark:bg-destructive/20">
                 {error}
               </p>
             )}
@@ -198,9 +198,9 @@ export default function RegisterPage() {
             </StatefulButton>
           </form>
 
-          <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="mt-8 text-center text-sm text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+            <Link href="/login" className="font-semibold text-primary hover:underline">
               Sign in
             </Link>
           </p>
@@ -209,12 +209,12 @@ export default function RegisterPage() {
       </div>
 
       {/* ── Right: 3D Marquee ─────────────────────────────────────────────── */}
-      <div className="relative hidden overflow-hidden bg-neutral-950 lg:block lg:w-1/2">
+      <div className="relative hidden overflow-hidden bg-muted lg:block lg:w-1/2">
         <ThreeDMarquee images={MARQUEE_IMAGES} className="h-screen rounded-none" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
         <div className="absolute bottom-10 right-10 text-right">
-          <p className="text-3xl font-bold text-white">RenToday</p>
-          <p className="mt-1 text-neutral-300">Thousands of listings across Dhaka</p>
+          <p className="text-3xl font-bold text-foreground">RenToday</p>
+          <p className="mt-1 text-muted-foreground">Thousands of listings across Dhaka</p>
         </div>
       </div>
 

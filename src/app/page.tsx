@@ -40,10 +40,10 @@ import type { IListing } from '@/lib/interfaces-types'
 // ── Hero background images ─────────────────────────────────────────────────────
 
 const HERO_IMAGES = [
-  { src: 'https://fastly.picsum.photos/id/1060/1600/900.jpg?hmac=X7k_KMM7ZOVLZ7MRRdIiYwMfE1pRGnZ1y9LUBzV9_k', alt: 'Modern apartment exterior' },
-  { src: 'https://fastly.picsum.photos/id/1029/1600/900.jpg?hmac=7TlXC0xt1VE0BnNnKsFh2KxgTe0hpWMoBqQbWOgHYj8', alt: 'Bright living room' },
-  { src: 'https://fastly.picsum.photos/id/1040/1600/900.jpg?hmac=h3FzPaRpBMW_f9Dh2a7FXJuOQJaEkJ_m3ETuvhD_WCs', alt: 'City apartment building' },
-  { src: 'https://fastly.picsum.photos/id/1068/1600/900.jpg?hmac=f6FalMR2Yqw_pVSHOg55k5ub5pM3FZ6Kk1_fipUjAo', alt: 'Interior bedroom' },
+  { src: '/assets/3d-contemporary-bedroom-interior_resized.jpg', alt: 'Modern apartment exterior' },
+  { src: '/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen_resized.jpg', alt: 'Bright living room' },
+  { src: '/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table_resized.jpg', alt: 'City apartment building' },
+  { src: '/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_resized.jpg', alt: 'Interior bedroom' },
 ]
 
 // ── Data constants ─────────────────────────────────────────────────────────────
@@ -125,7 +125,7 @@ function ListingCard({ listing }: { listing: IListing }) {
   const imageUrl =
     images.length > 0
       ? String(images[0])
-      : `https://fastly.picsum.photos/id/${(String(listing._id).charCodeAt(0) % 80) + 100}/800/500.jpg?hmac=placeholder`
+      : `/public/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa_resized.jpg`
 
   return (
     <div

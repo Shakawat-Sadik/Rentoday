@@ -125,7 +125,7 @@
 | Footer                                                     |            |                        |                                                   |
 | Social icon links                                          |            |                        |                                                   |
 | **— Listings / Explore Page —** -------------------------  | ---------- | ---------------------- | ------------------------------------------------- |
-| Search bar (title / location text search)                  | unlumen/ui | favicon-search         | `@/components/unlumen-ui/favicon-search`          |
+| Search bar (title / location text search)                  | shadcn/ui  | input                  | `@/components/ui/input`                           |
 | Location filter dropdown                                   | beui       | select                 | `@/components/motion/select`                      |
 | Rent range slider (min / max)                              | shadcn/ui  | slider                 | `@/components/ui/slider`                          |
 | Sort dropdown (price / newest)                             | beui       | select                 | `@/components/motion/select`                      |
@@ -193,7 +193,7 @@
 | Demo login button                                          | shadcn/ui | button          | `@/components/ui/button`          |
 | CTA button / "View Details" button / submit button         | shadcn/ui | button          | `@/components/ui/button`          |
 | Hero search bar                                            | shadcn/ui | input           | `@/components/ui/input`           |
-| Search bar (title / location text search)                  | shadcn/ui | input           | `@/components/ui/input`           |
+| Search bar (title / location text search)                  | unlumen/ui | favicon-search  | `@/components/unlumen-ui/favicon-search` |
 | Section tabs (Overview / Specs / Reviews)                  | shadcn/ui | tabs            | `@/components/ui/tabs`            |
 | Location dropdown                                          | shadcn/ui | select          | `@/components/ui/select`          |
 | Location filter dropdown                                   | shadcn/ui | select          | `@/components/ui/select`          |
@@ -247,3 +247,8 @@
 - If 3d marquee is used anywhere else then they must come from actual user-posted listing photos (fetched dynamically), not static/placeholder images
 - Components with a `-demo.tsx` suffix (e.g. `signup-form-demo.tsx`) are reference components — they are good to use but MUST be adapted for this project: remove the `-demo` suffix, adjust imports, and integrate properly into the actual page/route. Do NOT use them as-is with the demo name.
 - **Button choice rule:** a button that _starts a process_ (login, register, demo login, add listing, propose booking date, accept/decline a request, save profile) uses `button/stateful` — it needs to show its own loading/success/error state. A button that _just changes UI state or navigates_ (View Details, opening a dialog, navbar toggle, mobile drawer) uses `button/base`. When in doubt: if the click triggers an API call, it's `stateful`; if it only triggers local UI state or routing, it's `base`.
+- **Color palette rule:** use the colors defined in `globals.css` — do not invent new colors unless needed. If a color is missing, ask me before adding it.
+- **Button styling rule:** Let's call the button styled from the `@/components/motion/button/base` a base button. Use ripple for all base buttons. Base buttons are for actions that only change UI state or navigate, not for starting processes.
+Example: <Button variant="primary" size="md" ripple>Ripple</Button>
+         <Button variant="outline" size="md" ripple>Tap me</Button>
+- **Button styling rule:** Let's call the button styled from the `@/components/motion/button/stateful` a stateful button. Use ripple for all stateful buttons. Stateful buttons are for actions that start processes (login, register, add listing, propose booking date, accept/decline a request, save profile, etc). They show their own loading/success/error state.
