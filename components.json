@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "app/globals.css",
+    "css": "src/app/globals.css",
     "baseColor": "mist",
     "cssVariables": true,
     "prefix": ""
@@ -24,6 +24,7 @@
   "registries": {
     "@beui": "https://beui.dev/r/{name}.json",
     "@unlumen-ui": "https://ui.unlumen.com/r/{name}.json",
-    "@gooseui": "https://gooseui.pro/r/{name}.json"
+    "@gooseui": "https://gooseui.pro/r/{name}.json",
+    "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
   }
 }
