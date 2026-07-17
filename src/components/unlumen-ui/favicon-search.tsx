@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Globe, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -136,19 +137,22 @@ const FaviconSearch = React.forwardRef<HTMLInputElement, FaviconSearchProps>(
                 className="flex items-center justify-center text-muted-foreground"
               >
                 {domain && !faviconError ? (
-                  <Globe className="size-[18px]" />
+                  <Globe className="size-4.5" />
                 ) : (
-                  <Search className="size-[18px]" />
+                  <Search className="size-4.5" />
                 )}
               </motion.span>
             )}
           </AnimatePresence>
 
-          {/* preload img to detect load/error before showing the animated favicon */}
+          {/* preload to detect load/error before showing the animated favicon */}
           {domain && !faviconReady && !faviconError && (
-            <img
+            <Image
               src={getFaviconUrl(domain, faviconSize)}
               alt=""
+              width={20}
+              height={20}
+              unoptimized
               className="sr-only absolute"
               onLoad={() => setFaviconReady(true)}
               onError={() => setFaviconError(true)}
