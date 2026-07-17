@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ThreeDMarquee } from '@/components/ui/3d-marquee'
 import { StatefulButton, type ButtonState } from '@/components/motion/button/stateful'
-import { Button } from '@/components/motion/button/base'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -22,7 +21,38 @@ const MARQUEE_IMAGES = [
   '/assets/modern-indoor-living-room-with-comfortable-sofa-generative-ai.jpg',
   '/assets/modern-studio-apartment-design-with-bedroom-living-space.jpg',
   '/assets/small-juvenile-bedroom-arrangement.jpg',
+  '/assets/small-juvenile-bedroom-arrangement (1).jpg',
+  '/assets/small-juvenile-bedroom-arrangement (2).jpg',
   '/assets/view-futuristic-bedroom-with-furniture.jpg',
+  '/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa.jpg',
+  '/assets/3d-rendering-modern-dining-room-living-room-with-luxury-decor.jpg',
+  '/assets/3d-rendering-white-wood-living-room-near-bedroom-upstair.jpg',
+  '/assets/3d-room-interior-with-classic-design-furniture.jpg',
+  '/assets/261682_tiny.jpg',
+  '/assets/bed-arrangements-still-life.jpg',
+  '/assets/bringing-beach-home-collage.jpg',
+  '/assets/hq720.jpg',
+  "/assets/bringing-beach-home-collage.jpg",
+  "/assets/261682_tiny.jpg",
+  "/assets/3d-rendering-white-wood-living-room-near-bedroom-upstair.jpg",
+  "/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa.jpg",
+  "/assets/small-juvenile-bedroom-arrangement (2).jpg",
+  "/assets/small-juvenile-bedroom-arrangement.jpg",
+  "/assets/modern-indoor-living-room-with-comfortable-sofa-generative-ai.jpg",
+  "/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table.jpg",
+  "/assets/cozy-lively-home-interior-design.jpg",
+  "/assets/3d-modern-bedroom-interior.jpg",
+  "/assets/hq720.jpg",
+  "/assets/bed-arrangements-still-life.jpg",
+  "/assets/3d-room-interior-with-classic-design-furniture.jpg",
+  "/assets/3d-rendering-modern-dining-room-living-room-with-luxury-decor.jpg",
+  "/assets/view-futuristic-bedroom-with-furniture.jpg",
+  "/assets/small-juvenile-bedroom-arrangement (1).jpg",
+  "/assets/modern-studio-apartment-design-with-bedroom-living-space.jpg",
+  "/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration.jpg",
+  "/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen.jpg",
+  "/assets/3d-rendering-loft-luxury-living-room-with-shelf-near-dining-table.jpg",
+  "/assets/3d-contemporary-bedroom-interior.jpg"
 ]
 
 export default function LoginPage() {
