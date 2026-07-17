@@ -23,6 +23,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/motion/button/base'
+import { Button as NavButton } from '@/components/ui/button'
 import { StatefulButton, type ButtonState } from '@/components/motion/button/stateful'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
@@ -492,18 +493,16 @@ export default function ListingDetailPage() {
               <p className="mb-4 text-sm font-medium text-foreground">Contact &amp; Booking</p>
 
               {/* Call Owner — tel: link, visible to everyone */}
-              <Button
+              <NavButton
                 asChild
-                variant="primary"
                 size="lg"
                 className="w-full"
-                ripple
               >
                 <a href={`tel:${listing.ownerPhone as string}`}>
                   <Phone className="mr-2 h-4 w-4" />
                   Call Owner
                 </a>
-              </Button>
+              </NavButton>
 
               {/* Propose Booking Date */}
               <Button

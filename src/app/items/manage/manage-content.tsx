@@ -13,6 +13,7 @@ import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from '@/components/u
 import { Badge } from '@/components/ui/badge'
 import { StatefulButton, type ButtonState } from '@/components/motion/button/stateful'
 import { Button } from '@/components/motion/button/base'
+import { Button as NavButton } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { IListing, IBookingRequest } from '@/lib/interfaces-types'
 
@@ -146,7 +147,7 @@ export default function ManageContent() {
       align: 'center',
       cell: (row) => (
         <div className="flex items-center justify-center gap-2">
-          <Button
+          <NavButton
             asChild
             variant="ghost"
             size="icon"
@@ -155,7 +156,7 @@ export default function ManageContent() {
             <Link href={`/listings/${String(row._id)}`}>
               <Eye className="h-4 w-4" />
             </Link>
-          </Button>
+          </NavButton>
           <Button
             variant="ghost"
             size="icon"
@@ -284,12 +285,12 @@ export default function ManageContent() {
               <h1 className="text-xl font-bold text-foreground">My Listings</h1>
               <span className="text-sm text-muted-foreground">({listings.length})</span>
             </div>
-            <Button asChild variant="primary" size="sm">
+            <NavButton asChild size="sm">
               <Link href="/items/add">
                 <Plus className="mr-1.5 h-4 w-4" />
                 Add listing
               </Link>
-            </Button>
+            </NavButton>
           </div>
 
           {listings.length === 0 ? (
