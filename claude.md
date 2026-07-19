@@ -223,6 +223,50 @@
 12. Landing page (all 9 sections per PRD section 4)
 13. About + Contact pages
 14. Polish: responsive check, color consistency, final QA
+15. Listing Details must holding these following fields:
+    Property Size, Land Area, Bedrooms, Bathrooms, Garage, Year Built, Property Type, Property Status
+    Example:
+    Property Size: 1200 sqft
+    Land Area: 5 Katha
+    Bedrooms: 3
+    Bathrooms: 4
+    Garage: 1
+    Year Built: 2015
+    Property Type: Residential
+    Property Status: Serviced Apartment(Rent)
+
+    Listing Details UI: 
+    Property Size: input field
+    Land Area: Dropdown on number of Katha (1-10)
+    Bedrooms: Dropdown on number of Bedrooms (1-10)
+    Bathrooms: Dropdown on number of Bathrooms (1-10)
+    Garage: Dropdown on number of Garage spaces (0-5)
+    Year Built: `@/components/motion/wheel-picker` with years from 1950 to current year
+    Property Type: Dropdown with options like Residential, Commercial, etc.
+    Property Status: Dropdown with options like Serviced Apartment(Rent), Furnished, Unfurnished, etc.
+16. Create Dashboard route and layout for Admin user with following feature pages:
+    - Total Users
+    - Total Listings
+    - Total Booking Requests
+    - Recent Users
+    - Recent Listings
+    - Recent Booking Requests
+    - Overview of the system with charts and statistics. Use recharts for visual representation of data.
+    - Can delete, suspend, modify and add any listing or user if necessary
+    - Dashboard page should be accessible only to Admin user. If a general user tries to access it, they should be redirected to the dashboard of their own.
+17. Create Dashboard route and layout for General user with following feature pages:
+    - My Listings
+    - My Booking Requests
+    - My Profile
+    - Can delete, or add any listing or booking request if necessary.
+    - Can submit a modification request for any listing or booking request if necessary.
+    - Dashboard page should be accessible only to General user. If an Admin user tries to access it, they should be redirected to the dashboard of their own.
+18. For site owners contact info, please use the following:
+    - Email: shakawatsadik@gmail.com
+    - Phone: +880 1890372178
+    - Address: Eastern Housing, Mirpur Rupnagar, Dhaka-1216, Bangladesh
+19. Users can upload their profile picture. The profile picture should be displayed everywhere the user name comes up and in the profile page. The profile picture can be uploaded through sharing URL or drag-and-drop. For drag-and-drop, it should be uploaded to Cloudinary using CLOUDINARY_PROFILES_PRESET key stored in .env.local and the URL should be stored in the database.
+
 
 ### Execution Rules
 

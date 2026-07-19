@@ -10,17 +10,48 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 const MARQUEE_IMAGES = [
-  '/assets/3d-contemporary-bedroom-interior.jpg',
-  '/assets/3d-modern-bedroom-interior.jpg',
-  '/assets/3d-rendering-loft-luxury-living-room-with-shelf-near-dining-table.jpg',
-  '/assets/cozy-lively-home-interior-design.jpg',
-  '/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen.jpg',
-  '/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table.jpg',
-  '/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration.jpg',
-  '/assets/modern-indoor-living-room-with-comfortable-sofa-generative-ai.jpg',
-  '/assets/modern-studio-apartment-design-with-bedroom-living-space.jpg',
-  '/assets/small-juvenile-bedroom-arrangement.jpg',
-  '/assets/view-futuristic-bedroom-with-furniture.jpg',
+  '/assets/3d-contemporary-bedroom-interior_resized.jpg',
+  '/assets/3d-modern-bedroom-interior_resized.jpg',
+  '/assets/3d-rendering-loft-luxury-living-room-with-shelf-near-dining-table_resized.jpg',
+  '/assets/cozy-lively-home-interior-design_resized.jpg',
+  '/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen_resized.jpg',
+  '/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table_resized.jpg',
+  '/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_resized.jpg',
+  '/assets/modern-indoor-living-room-with-comfortable-sofa-generative-ai_resized.jpg',
+  '/assets/modern-studio-apartment-design-with-bedroom-living-space_resized.jpg',
+  '/assets/small-juvenile-bedroom-arrangement_resized.jpg',
+  '/assets/small-juvenile-bedroom-arrangement (1)_resized.jpg',
+  '/assets/small-juvenile-bedroom-arrangement (2)_resized.jpg',
+  '/assets/view-futuristic-bedroom-with-furniture_resized.jpg',
+  '/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa_resized.jpg',
+  '/assets/3d-rendering-modern-dining-room-living-room-with-luxury-decor_resized.jpg',
+  '/assets/3d-rendering-white-wood-living-room-near-bedroom-upstair_resized.jpg',
+  '/assets/3d-room-interior-with-classic-design-furniture_resized.jpg',
+  '/assets/261682_tiny_resized.jpg',
+  '/assets/bed-arrangements-still-life_resized.jpg',
+  '/assets/bringing-beach-home-collage_resized.jpg',
+  '/assets/hq720_resized.jpg',
+  "/assets/bringing-beach-home-collage_resized.jpg",
+  "/assets/261682_tiny_resized.jpg",
+  "/assets/3d-rendering-white-wood-living-room-near-bedroom-upstair_resized.jpg",
+  "/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa_resized.jpg",
+  "/assets/small-juvenile-bedroom-arrangement (2)_resized.jpg",
+  "/assets/small-juvenile-bedroom-arrangement_resized.jpg",
+  "/assets/modern-indoor-living-room-with-comfortable-sofa-generative-ai_resized.jpg",
+  "/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table_resized.jpg",
+  "/assets/cozy-lively-home-interior-design_resized.jpg",
+  "/assets/3d-modern-bedroom-interior_resized.jpg",
+  "/assets/hq720_resized.jpg",
+  "/assets/bed-arrangements-still-life_resized.jpg",
+  "/assets/3d-room-interior-with-classic-design-furniture_resized.jpg",
+  "/assets/3d-rendering-modern-dining-room-living-room-with-luxury-decor_resized.jpg",
+  "/assets/view-futuristic-bedroom-with-furniture_resized.jpg",
+  "/assets/small-juvenile-bedroom-arrangement (1)_resized.jpg",
+  "/assets/modern-studio-apartment-design-with-bedroom-living-space_resized.jpg",
+  "/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_resized.jpg",
+  "/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen_resized.jpg",
+  "/assets/3d-rendering-loft-luxury-living-room-with-shelf-near-dining-table_resized.jpg",
+  "/assets/3d-contemporary-bedroom-interior_resized.jpg"
 ]
 
 // Today's date formatted as YYYY-MM-DD — used as the max value for the DOB picker
@@ -89,7 +120,7 @@ export default function RegisterPage() {
               <Input
                 id="name"
                 type="text"
-                placeholder="Arif Rahman"
+                placeholder="Shakhawat Hossain"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
