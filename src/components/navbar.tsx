@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { Menu, LogOut, User, Building2, ChevronRight, MapPin } from 'lucide-react'
+import { Menu, LogOut, User, Building2, ChevronRight, MapPin, LayoutDashboard } from 'lucide-react'
 
 import {
   MotionNavigationMenu,
@@ -194,6 +194,13 @@ export default function Navbar() {
                     </div>
                     <div className="space-y-0.5">
                       <Link
+                        href="/dashboard"
+                        className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent transition-colors"
+                      >
+                        <LayoutDashboard className="h-3.5 w-3.5" />
+                        {user.role === 'admin' ? 'Admin Dashboard' : 'Dashboard'}
+                      </Link>
+                      <Link
                         href="/profile"
                         className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent transition-colors"
                       >
@@ -247,6 +254,11 @@ export default function Navbar() {
                   </SheetClose>
                   {user && (
                     <>
+                      <SheetClose asChild>
+                        <Link href="/dashboard" className={mobileLinkClass('/dashboard')}>
+                          {user.role === 'admin' ? 'Admin Dashboard' : 'Dashboard'}
+                        </Link>
+                      </SheetClose>
                       <SheetClose asChild>
                         <Link href="/items/add" className={mobileLinkClass('/items/add')}>Add Listing</Link>
                       </SheetClose>

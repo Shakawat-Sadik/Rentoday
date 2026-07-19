@@ -34,6 +34,14 @@ export function getUserFromRequest(request: NextRequest): TokenPayload | null {
   return verifyToken(token)
 }
 
+// Convenience guard for admin-only API routes — returns the payload only when
+// the caller is an authenticated admin, otherwise null.
+export function getAdminFromRequest(request: NextRequest): TokenPayload | null {
+  const auth = getUserFromRequest(request)
+  if (!auth || auth.role !== 'admin') return null
+  return auth
+}
+
 // ── For use in Server Components and page-level auth guards ───────────────────
 // Must be called inside an async Server Component or async page function.
 export async function getUserFromCookies(): Promise<TokenPayload | null> {

@@ -31,6 +31,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: INVALID_MSG }, { status: 401 })
     }
 
+    // Suspended accounts cannot log in (checked after password so we don't leak
+    // account existence to someone guessing credentials)
+    if (user.status === 'suspended') {
+      return NextResponse.json(
+        { error: 'Your account has been suspended. Please contact support.' },
+        { status: 403 },
+      )
+    }
+
     // Issue JWT and set httpOnly cookie
     const token = signToken({
       userId: String(user._id),

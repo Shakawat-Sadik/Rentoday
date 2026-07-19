@@ -13,6 +13,7 @@ export interface IUser {
   gender: 'male' | 'female' | 'prefer not to say'
   dateOfBirth: Date
   role: 'user' | 'admin'
+  status: 'active' | 'suspended'   // suspended users are blocked at login
   createdAt: Date
 }
 
@@ -66,6 +67,7 @@ const UserSchema = new Schema<IUser>({
   gender:      { type: String, enum: ['male', 'female', 'prefer not to say'], required: true },
   dateOfBirth: { type: Date, required: true },
   role:        { type: String, enum: ['user', 'admin'], default: 'user' },
+  status:      { type: String, enum: ['active', 'suspended'], default: 'active' },
   createdAt:   { type: Date, default: Date.now },
 })
 
