@@ -17,6 +17,12 @@ export interface IUser {
   createdAt: Date
 }
 
+export interface IAuthUser {
+  _id: string
+  name: string
+  email: string
+  role: string
+}
 export interface IListing {
   _id: string
   title: string

@@ -24,13 +24,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-
-interface AuthUser {
-  _id: string
-  name: string
-  email: string
-  role: string
-}
+import { IAuthUser } from '@/lib/interfaces-types'
 
 const POPULAR_AREAS = [
   { name: 'Gulshan',      href: '/listings?location=Gulshan' },
@@ -44,7 +38,7 @@ const POPULAR_AREAS = [
 export default function Navbar() {
   const router = useRouter()
   const pathname = usePathname()
-  const [user, setUser]           = useState<AuthUser | null>(null)
+  const [user, setUser]           = useState<IAuthUser | null>(null)
   const [authLoaded, setAuthLoaded] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -138,18 +132,10 @@ export default function Navbar() {
                     </MotionNavigationMenuItem>
                     <MotionNavigationMenuItem>
                       <MotionNavigationMenuLink
-                        href="/items/manage"
-                        data-active={pathname === '/items/manage' || undefined}
+                        href="/dashboard"
+                        data-active={pathname.startsWith('/dashboard') || undefined}
                       >
-                        Manage
-                      </MotionNavigationMenuLink>
-                    </MotionNavigationMenuItem>
-                    <MotionNavigationMenuItem>
-                      <MotionNavigationMenuLink
-                        href="/requests"
-                        data-active={pathname === '/requests' || undefined}
-                      >
-                        My Requests
+                        Dashboard
                       </MotionNavigationMenuLink>
                     </MotionNavigationMenuItem>
                   </>
@@ -260,13 +246,7 @@ export default function Navbar() {
                         </Link>
                       </SheetClose>
                       <SheetClose asChild>
-                        <Link href="/items/add" className={mobileLinkClass('/items/add')}>Add Listing</Link>
-                      </SheetClose>
-                      <SheetClose asChild>
-                        <Link href="/items/manage" className={mobileLinkClass('/items/manage')}>Manage Listings</Link>
-                      </SheetClose>
-                      <SheetClose asChild>
-                        <Link href="/requests" className={mobileLinkClass('/requests')}>My Requests</Link>
+                        <Link href="/dashboard/user/items/add" className={mobileLinkClass('/dashboard/user/items/add')}>Add Listing</Link>
                       </SheetClose>
                     </>
                   )}

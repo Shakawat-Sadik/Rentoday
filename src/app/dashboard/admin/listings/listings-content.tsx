@@ -18,7 +18,7 @@ import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from '@/components/u
 import { StatefulButton } from '@/components/motion/button/stateful'
 import { Button } from '@/components/motion/button/base'
 import { Button as NavButton } from '@/components/ui/button'
-import ConfirmDialog, { type ConfirmState } from '../confirm-dialog'
+import ConfirmDialog, { type ConfirmState } from '@/app/dashboard/confirm-dialog'
 import type { IListing } from '@/lib/interfaces-types'
 
 const LOCATIONS = [

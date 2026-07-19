@@ -14,7 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from '@/components/ui/empty'
 import { StatefulButton } from '@/components/motion/button/stateful'
 import { Button } from '@/components/motion/button/base'
-import ConfirmDialog, { type ConfirmState } from '../confirm-dialog'
+import ConfirmDialog, { type ConfirmState } from '@/app/dashboard/confirm-dialog'
 
 interface AdminUser {
   _id: string

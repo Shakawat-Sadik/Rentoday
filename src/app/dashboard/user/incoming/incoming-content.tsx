@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Check, X } from 'lucide-react'
 
 import { Table, type TableColumn } from '@/components/motion/table/index'
 import { Badge } from '@/components/ui/badge'
-import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from '@/components/ui/empty'
 import { Button } from '@/components/motion/button/base'
@@ -22,26 +21,21 @@ function StatusBadge({ status }: { status: string }) {
   return <Badge variant={variant} className="capitalize">{status}</Badge>
 }
 
-export default function RequestsContent() {
+export default function IncomingContent() {
   const [requests, setRequests] = useState<IBookingRequest[]>([])
   const [loading, setLoading]   = useState(true)
-  const [filter, setFilter]     = useState<'all' | 'pending' | 'accepted' | 'declined'>('all')
 
   const [confirm, setConfirm]         = useState<ConfirmState | null>(null)
   const [confirmBusy, setConfirmBusy] = useState(false)
 
   useEffect(() => {
+    // Requests placed on listings the current user owns
     fetch('/api/booking-requests/owner')
       .then((r) => (r.ok ? r.json() : { requests: [] }))
       .then((d) => setRequests(d.requests || []))
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [])
-
-  const filtered = useMemo(
-    () => (filter === 'all' ? requests : requests.filter((r) => r.status === filter)),
-    [requests, filter],
-  )
 
   async function handleConfirm() {
     if (!confirm) return
@@ -80,7 +74,7 @@ export default function RequestsContent() {
     },
     { key: 'requesterName', header: 'Requester', width: '140px' },
     {
-      key: 'proposedDate', header: 'Proposed', width: '120px',
+      key: 'proposedDate', header: 'Proposed Date', width: '130px',
       cell: (row) => fmtDate(String(row.proposedDate)),
       sortValue: (row) => new Date(String(row.proposedDate)).getTime(),
     },
@@ -93,7 +87,7 @@ export default function RequestsContent() {
       cell: (row) => <StatusBadge status={String(row.status)} />,
     },
     {
-      key: 'actions', header: 'Actions', width: '150px', align: 'center',
+      key: 'actions', header: 'Actions', width: '160px', align: 'center',
       cell: (row) => {
         const pending = row.status === 'pending'
         return (
@@ -120,42 +114,32 @@ export default function RequestsContent() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Booking Requests</h1>
-          <p className="text-sm text-muted-foreground">{requests.length} total</p>
-        </div>
-        <NativeSelect
-          value={filter}
-          onChange={(e) => setFilter(e.target.value as typeof filter)}
-          className="w-40"
-        >
-          <NativeSelectOption value="all">All statuses</NativeSelectOption>
-          <NativeSelectOption value="pending">Pending</NativeSelectOption>
-          <NativeSelectOption value="accepted">Accepted</NativeSelectOption>
-          <NativeSelectOption value="declined">Declined</NativeSelectOption>
-        </NativeSelect>
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Incoming Requests</h1>
+        <p className="text-sm text-muted-foreground">
+          Booking requests visitors have sent for your listings · {requests.length} total
+        </p>
       </div>
 
       {loading ? (
-        <Skeleton className="h-96 w-full rounded-xl" />
-      ) : filtered.length === 0 ? (
+        <Skeleton className="h-80 w-full rounded-xl" />
+      ) : requests.length === 0 ? (
         <Empty className="border border-dashed min-h-48">
           <EmptyHeader>
-            <EmptyTitle>No booking requests</EmptyTitle>
+            <EmptyTitle>No incoming requests yet</EmptyTitle>
             <EmptyDescription>
-              {filter === 'all' ? 'Requests will appear here as users propose visit dates.' : `No ${filter} requests.`}
+              When someone proposes a visit date on one of your listings, it will appear here.
             </EmptyDescription>
           </EmptyHeader>
         </Empty>
       ) : (
         <div className="overflow-hidden rounded-xl border border-border">
           <Table
-            data={filtered}
+            data={requests}
             columns={columns}
             getRowId={(row) => String(row._id)}
             rowHeight={56}
-            height={Math.min(filtered.length * 56 + 48, 560)}
+            height={Math.min(requests.length * 56 + 48, 540)}
             emptyState="No requests found"
             defaultSort={{ key: 'proposedDate', direction: 'asc' }}
             className="rounded-xl"
