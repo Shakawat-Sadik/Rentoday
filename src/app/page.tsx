@@ -41,19 +41,19 @@ import type { IAuthUser, IListing } from "@/lib/interfaces-types";
 
 const HERO_IMAGES = [
   {
-    src: "/assets/3d-contemporary-bedroom-interior_resized.jpg",
+    src: "https://raw.githubusercontent.com/Shakawat-Sadik/Rentoday_Assests/refs/heads/main/261682_tiny.jpg",
     alt: "Modern apartment exterior",
   },
   {
-    src: "/assets/hotel-room-interior-with-bedroom-area-living-space-kitchen_resized.jpg",
+    src: "https://raw.githubusercontent.com/Shakawat-Sadik/Rentoday_Assests/refs/heads/main/cozy-lively-home-interior-design.jpg",
     alt: "Bright living room",
   },
   {
-    src: "/assets/luxury-bedroom-suite-resort-high-rise-hotel-with-working-table_resized.jpg",
+    src: "https://raw.githubusercontent.com/Shakawat-Sadik/Rentoday_Assests/refs/heads/main/hq720.jpg",
     alt: "City apartment building",
   },
   {
-    src: "/assets/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration_resized.jpg",
+    src: "https://raw.githubusercontent.com/Shakawat-Sadik/Rentoday_Assests/refs/heads/main/luxury-modern-style-bedroom-interior-hotel-bedroom-generative-ai-illustration.jpg",
     alt: "Interior bedroom",
   },
 ];
@@ -137,7 +137,7 @@ function ListingCard({ listing }: { listing: IListing }) {
   const imageUrl =
     images.length > 0
       ? String(images[0])
-      : `/public/assets/3d-rendering-luxury-modern-living-room-with-fabric-sofa_resized.jpg`;
+      : `https://raw.githubusercontent.com/Shakawat-Sadik/Rentoday_Assests/refs/heads/main/3d-rendering-luxury-modern-living-room-with-fabric-sofa.jpg`;
 
   return (
     <div

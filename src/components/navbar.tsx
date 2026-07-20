@@ -164,10 +164,10 @@ export default function Navbar() {
 
             {authLoaded && (
               user ? (
-                <Popover align="end">
+                <Popover align="end" trigger="hover">
                   <PopoverTrigger>
                     <button
-                      className="ml-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-colors"
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-colors"
                       aria-label="Open profile menu"
                     >
                       {user.name.charAt(0).toUpperCase()}
